@@ -1,0 +1,11 @@
+**/*.sw[a-p]
+**/.DS_Store
+**/Thumbs.db
+**/*.log
+**/*.aux
+**/.floo
+**/.flooignore
+**/*.fdb_latexmk
+**/*.fls
+**/*.synctex.gz
+**/texput.log
