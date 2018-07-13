@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{centernot}
+\usepackage[margin=1in]{geometry}
+
+\newcommand{\p}[1]{\left(#1\right)}
+\newcommand{\f}[2]{\frac{#1}{#2}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\s}[1]{\left[#1\right]}
+
+\begin{document}
+
+	Let $\pi \in S_n$ be a permutation. Define $D(\pi) = \abs{\{1 \leq i < n \mid \pi(i + 1) < \pi(i)\}}$ to be the number of descents in $\pi$. Viewing $D_n$ as a random variable on uniformly distributed permutations, a central limit theorem is known and we establish a local limit theorem.
+
+	As another way of viewing a permutation $\pi$, consider a sequence $a_1, \ldots, a_n$ with $1 \leq a_i \leq n - i + 1$. To get a permutation $\pi$ from such a sequence, start with $S = \{1, \ldots, n\}$. For $i = 1, \ldots, n$, let $b_i$ be the $a_i$th remaining element of $S$, let $\pi(i) = b_i$, and remove $b_i$ from $S$. Then $\pi(i + i) < \pi(i)$ if and only if $a_{i+1} < a_i$, so the problem of counting descents in $\pi$ is equivalent to the problem of counting descents in $\{a_i\}$. This is nice since the $a_i$ are distributed independently.
+
+	Now, define the random variable $X_i$ for $1 \leq i < n$ as the indicator for the $i$th potential descent, that is, $1$ if $a_{i+1} < a_i$ and $0$ otherwise. We can write $D_n = X_1 + \ldots + X_n$. Since $X_i$ depends only on $a_i$ and $a_{i+1}$, $X_i$ is independent of all other $X_j$ except for $X_{i-1}$ and $X_{i+1}$. We calculate
+	\begin{align*}
+		\P(X_i = 1 \mid X_{i-1} = 1, X_{i+1} = 1) &= 1/6 \\
+		\P(X_i = 1 \mid X_{i-1} = 1, X_{i+1} = 0) &= 1/2 \\
+		\P(X_i = 1 \mid X_{i-1} = 0, X_{i+1} = 1) &= 1/2 \\
+		\P(X_i = 1 \mid X_{i-1} = 0, X_{i+1} = 0) &= 5/6.
+	\end{align*}
+	To bound the characteristic function of $D_n$, we first fix the values of $X_i$ for odd $i$. For simplicity, assume $n$ is even; the argument is the same when $n$ is odd. The even $X_i$ are independent of each other, so conditioned on the odd $X_i$, $D_n$ is a sum of independent random variables. The values of the odd $X_i$ can be viewed as a binary string, and since the distribution of the even $X_i$ depend only on the adjacent odd $X_{i-1}$ and $X_{i+1}$, the distribution of the sum of the even $X_i$ depends entirely on the number of occurrences of each length 2 substring in the binary string.
+
+	Write $N_{11}$ for the number of substrings $11$, $N_{10}$ for the number of substrings $10$, and the same for $N_{01}$ and $N_{00}$. Let $B^{(p)}_j$ denote an independent Bernoulli random variable with expectation $p$. We compute
+	\begin{align*}
+		\abs{\E \s{e^{it D_n/\sigma}}}
+		&= \abs{\E \s{\exp\p{it\p{\sum_{j=1}^{N_{11}} B^{(\f{1}{6})}_j + \sum_{j=1}^{N_{10}} B^{(\f{1}{2})}_j + \sum_{j=1}^{N_{01}} B^{(\f{1}{2})}_j + \sum_{j=1}^{N_{00}} B^{(\f{5}{6})}_j}/\sigma}}} \\
+		&= \abs{
+			\E \s{e^{it\sum_{j=1}^{N_{11}} B^{(\f{1}{6})}_j/\sigma}}
+			\E \s{e^{it\sum_{j=1}^{N_{10}} B^{(\f{1}{2})}_j/\sigma}}
+			\E \s{e^{it\sum_{j=1}^{N_{01}} B^{(\f{1}{2})}_j/\sigma}}
+			\E \s{e^{it\sum_{j=1}^{N_{00}} B^{(\f{5}{6})}_j/\sigma}}
+		}
+	\end{align*}
+	Using an argument similar to that of Gilmer-Kopparty \cite{GilmerKopparty14}, we bound each expectation separately.
+	\begin{align*}
+		\abs{\E \s{e^{it \sum_{j=1}^{N} B^{(p)}_j/\sigma}}}
+		&= \abs{\prod_{j=1}^{N} \E \s{e^{it B^{(p)}_j/\sigma}}} \\
+		&\leq \p{1 - 8p(1-p) \norm{\f{t}{2\pi \sigma_n}}^2}^N \\
+		&= \p{1 - 8p(1-p) \p{\f{t}{2\pi \sigma_n}}^2}^N \qquad \text{(when $t < \pi \sigma_n$)} \\
+		&\leq \p{1 - C \p{\f{t}{2\pi \sigma_n}}^2}^N \qquad \text{(taking $C = \min{\{8p(1-p)\}} = 80/9$)}
+	\end{align*}
+	Since $N_{11} + N_{10} + N_{01} + N_{00} = \f{n}{2} - 1$, we get
+	\begin{align*}
+		\abs{\E \s{e^{it D_n/\sigma}}}
+		&\leq \p{1 - C \p{\f{t}{2\pi \sigma_n}}^2}^{(\f{n}{2} - 1)} \\
+		&= \p{1 - \Theta(t^2/n)}^{(\f{n}{2} - 1)} \\
+		&\leq e^{-\Theta(t^2)}.
+	\end{align*}
+
+	\begin{thebibliography}{0}
+		\bibitem{GilmerKopparty14}
+			Justin Gilmer and Swastik Kopparty.
+			A local central limit theorem for the number of triangles in a random graph.
+			\emph{ArXiv e-prints},
+			November 2014.
+	\end{thebibliography}
+
+\end{document}
