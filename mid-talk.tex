@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{centernot}
+\usepackage[margin=1in]{geometry}
+
+\newcommand{\p}[1]{\left(#1\right)}
+\newcommand{\f}[2]{\frac{#1}{#2}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Var}{\mathrm{Var}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\s}[1]{\left[#1\right]}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+	\section*{LLT vs CLT}
+
+
+	\section*{Characteristic Functions}
+
+
+	\section*{Descents}
+
+	This proof is ours. The first thing to do when studying descents is to find a good way to sample them. We pick $1 \leq a_i \leq n - i + 1$ and pick $\pi(i)$ to be the $a_i$th smallest integer between $1$ and $n$ that has not already been picked. Then $\pi(i) > \pi(i+1)$ if and only if $a_i > a_{i+1}$. Call this event $X_i$. Some observations:
+
+	\begin{enumerate}[$\bullet$]
+		\item
+			$D_n = \sum\limits_{i=1}^{n-1} X_i$
+		\item
+			$\E X_i = 1/2$ (show with picture and duality), $\E D_n = \f{n-1}{2}$
+		\item
+			Not immediate: $\Var(D_n) = \f{n+1}{12}$
+		\item
+			Each $X_i$ depends only on its neighbors, $X_{i-1}$ and $X_{i+1}$
+	\end{enumerate}
+
+	We want to make $D_n$ look like a sum of independent random variables, so we try to only look at every other term in the sum. To do this, we first condition on the values of all the odd $X_i$, then look at the remaining odd $X_i$. The following facts are very helpful:
+	\begin{align*}
+		\P(X_i = 1 \mid X_{i-1} = 1,\ X_{i+1} = 1) &= 1/6, \\
+		\P(X_i = 1 \mid X_{i-1} = 1,\ X_{i+1} = 0) &= 1/2, \\
+		\P(X_i = 1 \mid X_{i-1} = 0,\ X_{i+1} = 1) &= 1/2, \\
+		\P(X_i = 1 \mid X_{i-1} = 0,\ X_{i+1} = 0) &= 5/6.
+	\end{align*}
+	The fact that these are all constants makes the distribution very easy to deal with after conditioning on the $X_i$. We split up the characteristic function into two steps of expectation:
+	\[ \phi_n(t) = \E[e^{itD_n/\sigma}] = \underset{\text{odd}}{\E} \ \underset{\text{even}}{\E} [e^{itD_n/\sigma}]. \]
+
+	We leave the conditioning on the even $X_i$ implicit and focus on the inner expectation, using the fact that the odd $X_i$ are independent:
+
+	\[
+		\abs{\E[e^{itD_n/\sigma}]}
+		= \abs{\E[e^{it(C + \sum\limits_{\text{odd } i} X_i/\sigma}]}
+		= \prod_{\text{odd i}} \abs{\E[e^{itX_i/\sigma}]}
+	\]
+
+	Now, we need a lemma straight from Gilmer and Kopparty that is mildly annoying to prove. Let $B$ be a Bernoulli random variable that is $1$ with probability $p$ and $0$ with probability $1-p$. Then for $\abs{x} \leq \pi$,
+	\[ \abs{\E[e^{ixB}]} \leq 1 - 8p(1-p) \p{\f{x}{2\pi}}^2. \]
+	Here, $x = t/\sigma$, so we need $\abs{t} \leq \pi \sigma$. Luckily, these are exactly the values of $t$ that we care about. Each odd $X_i$ has one of four Bernoulli distributions based on the values of $X_{i-1}$ and $X_{i+1}$. Out of these four values of $p$, one of them must minimize $8p(1-p)$; call this minimum value $C$. Then since $\sigma = \Theta(\sqrt{n})$, we get
+	\[ \abs{\E[e^{itX_i/\sigma}]} \leq 1 - C\p{\f{t}{2\pi \sigma}}^2 = 1 - \Theta(t^2/n). \]
+	Going back, we get
+	\[
+		\abs{\E[e^{itD_n/\sigma}]}
+		\leq \prod_{\text{odd } i} (1 - \Theta(t^2/n))
+		\leq (1 - \Theta(t^2/n))^{n/2}
+		\leq e^{-\Theta(t^2)/2}
+		= e^{-\Theta(t^2)}.
+	\]
+	This bound holds for any values of the even $X_i$, so it holds in general. To finish the proof, for any constant $A$ we can write
+	\[
+		\int_{-\pi \sigma}^{\pi \sigma} \abs{\phi_n(t) - e^{-t^2/2}} \d t
+		\leq \int_{-A}^{A} \abs{\phi_n(t) - e^{-t^2/2}} \d t
+		+ \int_{A \leq \abs{t} \leq \pi \sigma} \underbrace{(\abs{\phi_n(t)} + |e^{-t^2/2}|)}_{e^{-\Theta(t^2)}} \d t
+	\]
+	We can make the second integral arbitrarily small by picking $A$ to be arbitrarily large, and for any fixed $A$ the first integral goes to $0$ as $n$ gets large. Thus, the whole integral goes to $0$ as $n$ gets large and the local limit theorem for descents is proved.
+
+
+	\section*{Arithmetic Progressions}
+
+
+\end{document}
