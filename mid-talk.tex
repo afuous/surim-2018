@@ -14,6 +14,8 @@
 
 \newcommand{\E}{\mathbb{E}}
 \renewcommand{\P}{\mathbb{P}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{F}}
 \newcommand{\Var}{\mathrm{Var}}
 
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -24,6 +26,45 @@
 \begin{document}
 
 	\section*{LLT vs CLT}
+		CLT talks about the probability of a random variable $X$ being within an interval [a,b].
+		LLT instead talks about pointwise probability.
+		CLT: 
+\[ \abs{P(X_n < t) - P(Z < t)} \xrightarrow{n \to \infty} 0 \]
+
+LLT: For normalized X_n,
+\[ P(X_n = k) = \Phi(k) + o(1) \text{ where } \Phi(k) = \f{1}{\sqrt{2\pi}\sigma_n} \mathrm{exp}\p{-((k-\mu_n)/\sigma_n)^2/2} \]
+		Essentially, we have to show \[ \abs{P(X_n = k) - P(Z = k) }=  o(1)\].
+To establish a local limit theorem, we want to prove a quantitative bound for $\int_{-\pi\sigma_n}^{\pi\sigma_n} \abs{\phi_n(t) - e^{-t^2/2}} dt$.		
+		
+		Why does a CLT not give us an LLT for free? \\
+		The cumulative distribution function (CDF) of the standard normal = $\Phi(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-t^2/2} dt$.
+		CLT implies $\abs{P(a\leq x\leq b - (\Phi(b) - \Phi(a))} < \epsilon(n) \rightarrow 0$ as $n \rightarrow \infty$.
+		For an LLT: $P(x = k) = \abs{P(k-\frac{1}{2} \leq x \leq k+\frac{1}{2} - (\Phi(k+\frac{1}{2}) - \Phi(k-\frac{1}{2}))} \leq \epsilon(n)$ (from CLT). \\
+		We know the probability $P(x=k)$ is small, so we want to get a bound $\epsilon(n)$ that is actually meaningful.
+		Notice the area under the normal distribution = 1, so scaling the x-axis by standard deviation $\sigma$ implies scaling the y-axis by $\frac{1}{\sigma}$. Thus, for a meaningful LLT (that actually implies a small error between the distributions), we need $\epsilon(n) < o(\frac{1}{\sigma})$. 
+	
+		\subsection*{Intro to Variables Studied}
+		To get some more intuition about LLTs, let's look at three random variables we've been studying:
+		
+		1. Number of triangles in a random graph $G(n,p)$: include each of $n\choose2$ possible edges with probability $p$
+		$T_n$ = number of triangles in $G(n,p)$
+		Gilmer Kopparty:
+		Berkowitz:
+		
+		2. Number of descents in a permutation:
+		Define $D_n = \abs{\{i:1 \leq i \leq n-1, \pi(i+1) < \pi(i) \}}$.
+		
+		Simulation: n = ?? 
+		We observe that the distribution $D_n$ looks like a normal distribution "pointwise," thus we believe (and will later prove) an LLT exists for $D_n$. 
+		
+		Compare to: \\
+		3. $A_n$ = number arithmetic progressions in a random subset $S$ of $\F_n$, with $n>3$, prime; (each element of $\F_n$ has fixed probability $p$ of being in $S$.
+	 	R.V. $A_n$ can be thought of as a function $A_n : [0,1]^n \rightarrow \N$. 
+$A_n = \f{1}{2} \sum_{k \in \F_n} \sum_{j \neq 0 \in \F_n} X_k X_{k+j} X_{k+2j}$ for $n$ prime and not $2$ or $3$.	 	
+	 	\\
+	 	Simulation: n = ?? Sample size = ??
+	 	See oscillations, within a certain interval the distribution looks normal, but not pointwise: at a certain point, the distance between the normal distribution and distribution of $A_n$ does not converge to 0. Thus, we conjecture there is no LLT, which we will talk about more towards the end of this talk.
+
 
 
 	\section*{Characteristic Functions}

@@ -63,18 +63,40 @@
 		&\leq e^{-\Theta(t^2)}.
 	\end{align*}
 
-	Now we obtain the final bound for the local limit theorem. As shown in $\cite{Fulman97}$, we have a central limit theorem
-	\[ \abs{\P(\f{D_n - \mu}{\sigma} < t) - \P(Z < t)} \leq \f{C}{\sqrt{n}} \]
-	from which we get
-	\[ \abs{\phi_n(t) - e^{-t^2/2}} \leq \f{C}{\sqrt{n}}. \]
+	Now we obtain the final bound for the local limit theorem. As shown in $\cite{Fulman97}$, we have a central limit theorem 
+\[ \sup_{ -\infty < x < \infty} \abs{\P(\f{D_n - \mu}{\sigma} < t) - \P(Z < t)} \leq \f{12}{\sqrt{n}} \].
 
-	For any $\eps > 0$, we compute
+For $y<0$, $P(D_n-\mu \leq y\sigma) = \frac{1}{2} P(\abs{D_n-\mu} \geq \abs{y}\sigma) \leq \frac{1}{2y^2}$ by Chebyshev's Inequality. Similarly, $P(D_n-\mu \leq y\sigma) \leq \frac{1}{2y^2}$. 
+
+Thus, \[\abs{\P(\f{D_n - \mu}{\sigma} < t) - \P(Z < t)} = \begin{cases} 
+      \f{12}{\sqrt{n}} \\[10pt]
+      \P(\f{D_n - \mu}{\sigma} \leq y) + \P(Z \leq y) \leq \frac{1}{2y^2} + e^{-\Theta(y^2)} & \text{for } y < 0 \\[10pt]
+      \P(\f{D_n - \mu}{\sigma} \geq y) + \P(Z\geq y) \leq \frac{1}{2y^2} + e^{-\Theta(y^2)} & \text{for } y > 0 \\[10pt]
+\end{cases} \].
+
+Hence, we have
+\begin{align}
+\abs{\phi_n(t) - e^{-t^2/2}} &\leq \abs{t} \int_R \abs{\P(\f{D_n - \mu}{\sigma} < y) - \P(Z < y)} dy  \\
+&\leq |t| \int_{|y|>k\sigma} \abs{\P(\f{D_n - \mu}{\sigma} < y) - \P(Z < y)} dy + |t| \int_{|y| \leq k\sigma}  \abs{\P(\f{D_n - \mu}{\sigma} < y) - \P(Z < y)} dy \\
+&\leq |t| \int_{|y|>k\sigma} \frac{1}{2y^2} + e^{-\Theta(y^2)} dy + |t|2k\sigma \sqrt{\frac{12}{n}}.
+\end{align}
+
+If we take $k = O(n^{-\frac{1}{2} + \epsilon})$. Since $\sigma = O(n)$, we have $\abs{\phi_n(t) - e^{-t^2/2}} \leq |t|O(n^{-\frac{1}{2} + \epsilon})$.
+
+	Thus, for any $\eps > 0$, we compute
 	\begin{align*}
 		\int_{-\pi \sigma}^{\pi \sigma} \abs{\phi_n(t) - e^{-t^2/2}} \d t
 		&\leq \int_{-n^\eps}^{n^\eps} \abs{\phi_n(t) - e^{-t^2/2}} \d t + \int_{n^\eps < \abs{t} < \pi \sigma} (\abs{\phi_n(t)} + |e^{-t^2/2}|) \d t \\
 		&\leq \int_{-n^\eps}^{n^\eps} \abs{\phi_n(t) - e^{-t^2/2}} \d t + \int_{n^\eps < \abs{t} < \pi \sigma} e^{-\Theta(t^2)} \d t \\
 		&= O(n^{-\f{1}{2} + \eps}).
 	\end{align*}
+
+
+
+
+
+
+
 
 	\begin{thebibliography}{0}
 		\bibitem{GilmerKopparty14}
