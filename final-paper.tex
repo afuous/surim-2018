@@ -1,0 +1,161 @@
+\documentclass[12pt]{amsart} % Document type
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amssymb}
+\usepackage{mathdots}
+\usepackage[pdftex]{graphicx}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{listings}
+\PassOptionsToPackage{usenames,dvipsnames}{color}  %% Allow color names
+\usepackage{pdfpages}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+\usepackage{framed}
+\usepackage{wasysym}
+\usepackage[thinlines]{easytable}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{tabularx} % also loads 'array' package
+\usepackage{diagbox}
+
+\title{Quantitative and Local Central Limit Theorems}
+\author{}
+\date{}
+
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage}
+
+\definecolor{shadecolor}{gray}{0.9}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%
+% Custom spacing commands
+
+\newcommand{\sss}{\vspace{2 mm}\noindent}
+\newcommand{\lss}{\vspace{5 mm}\noindent}
+\newcommand{\lls}{\vspace{7 mm}\noindent}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\HR}{\vspace{5pt}\hrule height 1pt \vspace{5pt}}
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%
+% Shortcuts for commonly used symbols
+
+\newcommand{\f}[2]{\frac{#1}{#2}}
+\newcommand{\p}[1]{\left(#1\right)}
+\newcommand{\s}[1]{\left[#1\right]}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\ap}{\mathcal{A}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\ca}{\mathcal}
+\newcommand{\fr}{\mathfrak}
+\newcommand{\eu}{\EuScript}
+\newcommand{\scr}{\mathscr}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\bbr}{\mathbb{R}}
+\newcommand{\bbq}{\mathbb{Q}}
+\newcommand{\bbc}{\mathbb{C}}
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbp}{\mathbb{P}}
+\newcommand{\bfa}{\mathbf{a}}
+\newcommand{\bfb}{\mathbf{b}}
+\newcommand{\bfc}{\mathbf{c}}
+\newcommand{\bfu}{\mathbf{u}}
+\newcommand{\bfv}{\mathbf{v}}
+\newcommand{\bfx}{\mathbf{x}}
+\newcommand{\ring}{\ca O}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\isom}{\overset{\sim}{\to}}
+\renewcommand{\iff}{\Leftrightarrow}
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\impliedby}{\Leftarrow}
+\newcommand{\contradiction}{\Rightarrow\Leftarrow}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+% Environment styles
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{question}[thm]{Question}
+\newtheorem{hypothesis}[thm]{Hypothesis}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Corollary}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{thm*}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{example}[thm]{Example}
+\newtheorem*{conj*}{Conjecture}
+\newtheorem*{rd}{Read from the text}
+\newenvironment{answer}{\noindent\textsc{Answer:}}{\hfill $\square$}
+
+\theoremstyle{remark}
+\newtheorem*{defn*}{Definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem*{remark*}{Remark}
+\newtheorem{notation}[thm]{Notation}
+
+% End of top matter
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+asdf blah
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{Background}
+
+
+\section{Descents in a Permutation}
+
+\section{3-Term Arithmetic Progressions}
+
+\subsection{Experimental Results and Conjectures}
+
+\subsubsection{Continuous sets}
+
+\section{General Framework for no LLT for other R.V.'s}
+
+\section{Attempts to get CLT or LLT for $A_{n,k}$}
+
+
+
+\end{document}

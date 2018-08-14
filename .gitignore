@@ -1,6 +1,7 @@
 **/*.sw[a-p]
 **/.DS_Store
 **/Thumbs.db
+**/__pycache__
 **/*.log
 **/*.aux
 **/.floo
@@ -9,3 +10,4 @@
 **/*.fls
 **/*.synctex.gz
 **/texput.log
+**/*.out
