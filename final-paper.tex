@@ -587,7 +587,41 @@ $$ \bar{A}_n = \frac{1}{2}\sum_{i = 1}^{n} {\sum_{j = 1}^{n-1} {x_i x_{i+j} x_{i
     \label{fig:3ap-cont}
 \end{figure}
 
-We simulated this to see if it possibly followed the Gaussian distribution pointwise. From figure \ref{fig:3ap-cont}, we conclude that it is very likely that there is an LLT for $\bar{A}_n$. However, we have not pursued a proof of this.
+We simulated this to see if it possibly followed the Gaussian distribution pointwise. From figure \ref{fig:3ap-cont}, we conjecture that it is very likely that there is an LLT for $\bar{A}_n$. However, we successfully can show that there is a CLT for $\bar{A}_n$. Namely, define $\bar{\mu}_n = \E[\bar{A}_n]$ and $\bar{\sigma}_n^2 = \Var(A_n)$. Then the following theorem holds:
+
+\begin{thm}
+\label{thm:clt-an-cont}
+$$\abs{P\p{\frac{\bar{A}_n - \bar{\mu}_n}{\bar{\sigma}_n} \leq x} - \Phi(x)} = O\p{n^{-1/4}}.$$
+\end{thm}
+
+Notably, this is exactly the same bound achieved in Theorem \ref{thm:clt-an}. This CLT is a consequence of the fact that the dependency graph of the indicator functions $1_\Lambda$ does not change if we make the underlying $x_i$ uniform on [0, 1] instead of Bernoulli on \{0, 1\}. However, the following lemma is what gives us the exact same bound as for the standard case, $A_n$:
+
+\begin{lem}
+\label{lem:var-an-cont}
+$\bar{\sigma}_n^2 = \Theta(n^3).$
+\end{lem}
+
+\begin{proof}
+First, note that 
+$$\bar{\mu}_n = \E\left[\sum_{\Lambda} {1_\Lambda}\right] = \sum_{\Lambda} {\E[1_\Lambda]} = \frac{1}{8} \binom{n}{2}.$$
+Now, we can also calculate
+\begin{align*}
+\E\left[ \bar{A}_n^2 \right] &= \E\left[\p{\sum_{\Lambda} {1_\Lambda}}^2\right] = \E\left[\sum_{\Lambda_1} {\sum_{\Lambda_2} {1_{\Lambda_1} 1_{\Lambda_2}}}\right] \\
+&= \E\left[\sum_{\Lambda_1} {\sum_{\Lambda_2} {\prod_{j \in {\Lambda_1 \cup \Lambda_2}} {x_j}}}\right] \\
+&= \E\left[\sum_{\Lambda_1} {\sum_{i=0}^{3} {\sum_{\substack{\Lambda_2 \textrm{ s.t. } \\ \abs{\Lambda_1 \cap \Lambda_2} = i}} {\prod_{j \in {\Lambda_1 \cup \Lambda_2}} {x_j}}}}\right] \\
+&= \sum_{\Lambda_1} {\sum_{i=0}^{3} {\sum_{\substack{\Lambda_2 \textrm{ s.t. } \\ \abs{\Lambda_1 \cap \Lambda_2} = i}} {\p{\frac{1}{2}}^{6-i}}}} \\
+&= \sum_{\Lambda_1} {\sum_{i=0}^{3} {\p{\frac{1}{2}}^{6-i} \p{\# \{\Lambda_2 \mid \abs{\Lambda_1 \cap \Lambda_2} = i \}}}}.
+\end{align*}
+
+The particular quantity $\# \{\Lambda_2 \mid \abs{\Lambda_1 \cap \Lambda_2} = i \}$ is examined further and calculated in section \ref{var-ank}. For now we take the particular values we need as given and note that the quantity does not depend on our choice of $\Lambda_1$.
+
+$$
+\E\left[ \bar{A}_n^2 \right] = \binom{n}{2} \p{\frac{1}{8} + \frac{1}{16}(6) + \frac{1}{32}\p{\frac{9}{2}n-\frac{39}{2}} + \frac{1}{64}\p{\frac{1}{2}n^2 - 5n + \frac{25}{2}}}.
+$$
+Now, given that $\bar{\sigma}_n^2 = \E\left[ \bar{A}_n^2 \right] - \bar{\mu}_n^2$, we have
+$$ \bar{\sigma}_n^2 = \frac{1}{64}\binom{n}{2}\p{n - \frac{25}{54}} = \Theta(n^3). $$
+
+\end{proof}
 
 \section{Attempts to get CLT for $A_{n,k}$}
 
@@ -757,6 +791,7 @@ Thus, $\P(X_n = x)= o\p{\frac{1}{\sigma_n}}.$ Now $\mathcal{N}_n(x) = \frac{1}{\
 
 
 \subsection{Variance of $A_{n,k}$}
+\label{var-ank}
 
 \begin{lem}
 The variance of $A_{n,k}$ is $\sigma_{n,k}^2 = \frac{k^3(n-k)^3}{2n^4} + O(n)$.
@@ -769,16 +804,17 @@ We have that $\sigma_{n,k}^2 = \E[A_{n,k}^2] - (\E[A_{n,k}])^2 = \E[A_{n,k}^2] -
 &= \sum_{i = 0}^3 \frac{{k\choose{6-i}}}{{n\choose{6-i}}} \sum_{\Lambda_1}\sum_{\substack{\Lambda_2 \textrm{ s.t. } \\ \abs{\Lambda_1 \cap \Lambda_2} = i}} 1.
 \end{align*}
 
-We now count the number of pairs of 3-term arithmetic progressions $\{\Lambda_1, \Lambda_2\}$ that intersect 0, 1, 2, and 3 times:
+We now consider the quantity $\#\{\Lambda_2 \mid \abs{\Lambda_1 \cap \Lambda_2} = i\}$. Since we know there are $i$ elements pre-determined from $\Lambda_1$, we take each subset of $i$ elements from $\Lambda_1$ and perform the following procedure. Check how many arithmetic progressions contain those many numbers (which themselves come from an arithmetic progression), given the function $f: \bbn \times \{0, 1, 2, 3\} \to \bbn$ defined by $f(0) = \binom{n}{2}$, $f(1) = \frac{3}{2}(n-1)$, $f(2) = 3$, and $f(3) = 1$. In particular, we check $f(i)$. However, this overcounts the quantity we desire because it also counts arithmetic progressions whose intersection with $\Lambda_1$ is greater than 1. Thus, we check all the ways of adding another element from $\Lambda_1$ to our current subset of $i$ elements and subtract out $f(i+1)$ arithmetic progressions. We apply continue applying inclusion-exclusion until we arrive at the quantity we desire. Thus, we have
+
+$$ \#\{\Lambda_2 \mid \abs{\Lambda_1 \cap \Lambda_2} = i\} = \binom{3}{i}\sum_{j=0}^{3-i} {(-1)^{j}\binom{i}{j}f(j-i)}. $$
+
+Now, counting the number of pairs of 3-term arithmetic progressions $\{\Lambda_1, \Lambda_2\}$ that intersect 0, 1, 2, and 3 times, we have:
 \begin{align*}
 &\#\{\{\Lambda_1, \Lambda_2\} \mid \abs{\Lambda_1 \cap \Lambda_2} = 3\} = {n\choose 2} \\ 
 &\#\{\{\Lambda_1, \Lambda_2\} \mid \abs{\Lambda_1 \cap \Lambda_2} = 2\} = 6{n\choose 2} \\
 &\#\{\{\Lambda_1, \Lambda_2\} \mid \abs{\Lambda_1 \cap \Lambda_2} = 1\} = \frac{1}{2}{n\choose2}(9n-39) \\
 &\#\{\{\Lambda_1, \Lambda_2\} \mid \abs{\Lambda_1 \cap \Lambda_2} = 0\} 
-\begin{aligned}[t]
-&= {n\choose4} - \p{{n\choose 2}+6{n\choose 2}+\frac{1}{2}{n\choose2}(9n-39)} \\
-&= \frac{1}{2}{n\choose 2}(n^2-10n+25).
-\end{aligned}
+= \frac{1}{2}{n\choose 2}(n^2-10n+25).
 \end{align*} 
 
 After using these to calculate the second moment of $A_{n,k}$ by plugging the resulting expression into Mathematica, we find
