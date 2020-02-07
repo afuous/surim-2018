@@ -24,7 +24,7 @@
 
 	Let $k = \abs{S}$, and denote the complement of $S$ in $\Z/n\Z$ as $S^c$, so $\abs{S^c} = n - k$. The total number of arithmetic progressions $A(\Z/n\Z)$ is $n(n-1)$. These arithmetic progressions can be split into four groups based on the locations of their elements: all in $S$, all in $S^c$, exactly one in $S$, and exactly one in $S^c$.
 
-	There are $A(S)$ progressions all in $S$ and $A(S^c)$ all in $S^c$. The number of progressions with exactly one element in $S$ is $3k(k-1) - 3A(S)$ since each ordered pair of elements of $S$ is contained in $3$ total progressions, but we need to subtract the contribution of the progressions entirely contained in $S$, each of which contains $3$ ordered pairs. Similarly, the number of progressions with exactly one element in $S^c$ is $3(n-k)(n-k-1) - 3A(S^c)$. Adding everything together, we get
+	There are $A(S)$ progressions all in $S$ and $A(S^c)$ all in $S^c$. The number of progressions with exactly two elements in $S$ is $3k(k-1) - 3A(S)$ since each ordered pair of elements of $S$ is contained in $3$ total progressions, but we need to subtract the contribution of the progressions entirely contained in $S$, each of which contains $3$ ordered pairs. Similarly, the number of progressions with exactly two elements in $S^c$ is $3(n-k)(n-k-1) - 3A(S^c)$. Adding everything together, we get
 	\[ n(n-1) = A(S) + (3k(k-1) - 3A(S)) + (3(n-k)(n-k-1) - 3A(S^c)) + A(S^c). \]
 	Simplifying,
 	\[ A(S) + A(S^c) = \f{1}{2}\p{3k(k-1) + 3(n-k)(n-k-1) - n(n-1)}. \]
